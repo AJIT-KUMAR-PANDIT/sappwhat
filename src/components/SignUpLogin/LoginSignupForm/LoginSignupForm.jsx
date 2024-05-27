@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 const LoginSignupForm = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [useEmail, setUseEmail] = useState(true); // New state to toggle between email and phone
   const [formData, setFormData] = useState({
     email: "",
     phone: "",
@@ -19,14 +20,18 @@ const LoginSignupForm = () => {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.email && !formData.phone) {
-      newErrors.contact = "Email or phone number is required";
-    }
-    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email address is invalid";
-    }
-    if (formData.phone && !/^\d{10}$/.test(formData.phone)) {
-      newErrors.phone = "Phone number is invalid";
+    if (useEmail) {
+      if (!formData.email) {
+        newErrors.email = "Email is required";
+      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        newErrors.email = "Email address is invalid";
+      }
+    } else {
+      if (!formData.phone) {
+        newErrors.phone = "Phone number is required";
+      } else if (!/^\d{10}$/.test(formData.phone)) {
+        newErrors.phone = "Phone number is invalid";
+      }
     }
     if (!formData.password) {
       newErrors.password = "Password is required";
@@ -44,40 +49,42 @@ const LoginSignupForm = () => {
   };
 
   return (
-    <div className="w-full max-w-md p-8 space-y-6  rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-center">
+    <div className="w-full max-w-md p-8 space-y-6 rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold text-center text-black">
         {isLogin ? "Login" : "Sign Up"}
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
+        {useEmail ? (
+          <div>
+            <label className="block font-medium text-black text-bold">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="text-black text-bold w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-zinc-700"
+            />
+            {errors.email && <p className="text-red-500">{errors.email}</p>}
+          </div>
+        ) : (
+          <div>
+            <label className="block font-medium text-black text-bold">
+              Phone
+            </label>
+            <input
+              type="text"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="text-black text-bold w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-zinc-700"
+            />
+            {errors.phone && <p className="text-red-500">{errors.phone}</p>}
+          </div>
+        )}
         <div>
-          <label className="block  font-medium text-black text-bold">
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="text-black text-bold w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-zinc-700"
-          />
-          {errors.email && <p className="text-red-500 ">{errors.email}</p>}
-        </div>
-        <div>
-          <label className="block  font-medium text-black text-bold">
-            Phone
-          </label>
-          <input
-            type="text"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="text-black text-bold w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-zinc-700"
-          />
-          {errors.phone && <p className="text-red-500 ">{errors.phone}</p>}
-        </div>
-        {errors.contact && <p className="text-red-500 ">{errors.contact}</p>}
-        <div>
-          <label className="block  font-medium text-black text-bold">
+          <label className="block font-medium text-black text-bold">
             Password
           </label>
           <input
@@ -87,13 +94,11 @@ const LoginSignupForm = () => {
             onChange={handleChange}
             className="text-black text-bold w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-zinc-700"
           />
-          {errors.password && (
-            <p className="text-red-500 ">{errors.password}</p>
-          )}
+          {errors.password && <p className="text-red-500">{errors.password}</p>}
         </div>
         <button
           type="submit"
-          className="w-full px-4 py-2  bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-zinc-700"
+          className="w-full px-4 py-2 bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-zinc-700"
         >
           {isLogin ? "Login" : "Sign Up"}
         </button>
@@ -104,6 +109,14 @@ const LoginSignupForm = () => {
           className="text-indigo-600 hover:underline"
         >
           {isLogin ? "Create an account" : "Already have an account? Login"}
+        </button>
+      </div>
+      <div className="text-center mt-4">
+        <button
+          onClick={() => setUseEmail(!useEmail)}
+          className="text-indigo-600 hover:underline"
+        >
+          {useEmail ? "Login with phone number" : "Login with email"}
         </button>
       </div>
     </div>
