@@ -6,8 +6,8 @@ const MyMessages = () => {
     <>
       <div className="flex">
         <div className="rounded-[9px] w-[326px] h-[66px] bg-[#e1f7ca]">
-          No I will go with you as I practiced Rasengan with Jiraya sensei last
-          week!
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore.
         </div>
         <div>
           <img src={myMessagesTip} alt="myMessagesTip" />
