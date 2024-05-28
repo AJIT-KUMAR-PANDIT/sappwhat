@@ -116,7 +116,7 @@ const LoginSignupForm = () => {
           onClick={() => setUseEmail(!useEmail)}
           className="text-indigo-600 hover:underline"
         >
-          {useEmail ? "Login with phone number" : "Login with email"}
+          {useEmail ? "Use phone number" : "Use email"}
         </button>
       </div>
     </div>
