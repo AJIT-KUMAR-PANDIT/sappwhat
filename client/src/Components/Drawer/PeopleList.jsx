@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import images from "../../assets/index";
 
 const people = [
   {
@@ -47,6 +48,9 @@ const PeopleList = () => {
 
   return (
     <div className="h-[100vh] bg-gray-100 p-4">
+      <div>
+        <img src={images.sappwhat} alt="SappWhat Logo" className="" />
+      </div>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-bold">Chats</h2>
         <input
@@ -54,7 +58,7 @@ const PeopleList = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search"
-          className="w-[100vw]  text-sm text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-600"
+          className="w-[100vw] h-[44px]  text-sm text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-600"
         />
       </div>
       <ul>
